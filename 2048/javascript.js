@@ -78,10 +78,12 @@ function move(orientation,direction)
 					if(direction==="positive"&&j!=4){
 						 nextId=getId_traversal(orientation,i,j+1);
 						 empty_neighbour=(empty_neighbour||(!($(nextId).hasClass("filled"))));
+						 console.log(id+" "+ orientation+" "+direction +" "+empty_neighbour);
 						}
 					if(direction==="negative"&&j!=1){
                                                  nextId=getId_traversal(orientation,i,j-1);
                                                  empty_neighbour=(empty_neighbour||(!($(nextId).hasClass("filled")))); 
+						 console.log(id+" "+ orientation+" "+direction +" "+empty_neighbour);
                                                 }
 	
 					atleast_one=true;arr.push($(id).html());
@@ -101,9 +103,9 @@ function move(orientation,direction)
 		for(i=0;i<read_h.length;i++){
 				arr=[];
 			for(j=0;j<read_h[i].length;){
-				if(j+1==read_h[i].length){arr.push(read_h[i][j]);j=j+1;same_neighbour=false;}
+				if(j+1==read_h[i].length){arr.push(read_h[i][j]);j=j+1;}
 				else if(read_h[i][j]!==read_h[i][j+1]){arr.push(read_h[i][j]);j=j+1;}
-				else{arr.push(""+parseInt(read_h[i][j])*2);j=j+2;}
+				else{arr.push(""+parseInt(read_h[i][j])*2);j=j+2;same_neighbour=true;}
 			}
 			print_h.push(arr);
 		}
