@@ -18,17 +18,28 @@ console.log("img/btn:"+name+" = "+orientation+" "+direction);
 move(orientation,direction);
 }
 
-function move(orientation,direction)
+function getId_traversal(orientation,i,j)
 {
 	switch(orientation){
-	case 'horizontal' :
+	case 'horizontal' :	return "#"+i+""+j;
+		break;
+	case 'vertical'   :	return "#"+j+""+i;
+		break;
+	default:
+	}
+}
+
+function move(orientation,direction)
+{
+//	switch(orientation){
+//	case 'horizontal' :
 		read_h=[];
 		//get values in array
 		for(i=1;i<=4;i++){
 				arr=[];
 			for(j=1;j<=4;j++)
 			{
-				id="#"+i+""+j;//difference of horizontal or vertical
+				id=getId_traversal(orientation,i,j);//difference of horizontal or vertical
 				filled=($(id).hasClass("filled"));
 				if(!filled){}
 				else{arr.push($(id).html());}
@@ -50,11 +61,11 @@ function move(orientation,direction)
 			print_h.push(arr);
 		}
 		console.log(print_h);
-		break;
-	case 'vertical' :
-		break;
+//		break;
+//	case 'vertical' :
+//		break;
 
-	}
+//	}
 }
 
 
@@ -69,7 +80,7 @@ for(i=1;i<=4;i++)
 	}
 }
 unset("#44");set("#44","43");
-unset("#33");
+unset("#33");set("#33","43");
 unset("#12");set("#12","14");
 unset("#13");
 }
