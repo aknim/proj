@@ -33,7 +33,6 @@ div{
 
 .d2{
 	background-color:yellow;
-	text-color:green;
 }
 
 .d4{
@@ -49,7 +48,31 @@ div{
 }
 
 .d32{
-        background-color:black;
+        background-color:aliceblue;
+}
+
+.d64{
+        background-color:aqua;
+}
+
+.d128{
+        background-color:azure;
+}
+
+.d256{
+        background-color:beige;
+}
+
+.d512{
+        background-color:bisque;
+}
+
+.d1024{
+        background-color:blueviolet;
+}
+
+.d2048{
+        background-color:burlywood;
 }
 
 
