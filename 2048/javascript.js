@@ -22,7 +22,7 @@ function move(orientation,direction)
 {
 	switch(orientation){
 	case 'horizontal' :
-		arr_h=[];
+		read_h=[];
 		//get values in array
 		for(i=1;i<=4;i++){
 				arr=[];
@@ -35,9 +35,21 @@ function move(orientation,direction)
 				
 			}
 			//console.log(arr);
-			arr_h.push(arr);
+			read_h.push(arr);
 		}
-		console.log(arr_h);	
+		console.log(read_h);	
+
+		print_h=[];
+		for(i=0;i<read_h.length;i++){
+				arr=[];
+			for(j=0;j<read_h[i].length;){
+				if(j+1==read_h[i].length){arr.push(read_h[i][j]);j=j+1;}
+				else if(read_h[i][j]!==read_h[i][j+1]){arr.push(read_h[i][j]);j=j+1;}
+				else{arr.push(""+parseInt(read_h[i][j])*2);j=j+2;}
+			}
+			print_h.push(arr);
+		}
+		console.log(print_h);
 		break;
 	case 'vertical' :
 		break;
@@ -56,9 +68,10 @@ for(i=1;i<=4;i++)
 		set("#"+i+""+j,10*i+j);
 	}
 }
-unset("#44");
+unset("#44");set("#44","43");
 unset("#33");
-unset("#12");unset("#13");
+unset("#12");set("#12","14");
+unset("#13");
 }
 
 function unset(id){
