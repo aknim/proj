@@ -44,6 +44,7 @@ function getStart_traversal_id(direction,len,p_len)
 function move(orientation,direction)
 {
 		//get values in array
+		can_move=false;
 		read_h=[];
 		for(i=1;i<=4;i++){
 				arr=[];
@@ -64,14 +65,15 @@ function move(orientation,direction)
 		for(i=0;i<read_h.length;i++){
 				arr=[];
 			for(j=0;j<read_h[i].length;){
-				if(j+1==read_h[i].length){arr.push(read_h[i][j]);j=j+1;}
+				if(j+1==read_h[i].length){arr.push(read_h[i][j]);j=j+1;can_move=false;}
 				else if(read_h[i][j]!==read_h[i][j+1]){arr.push(read_h[i][j]);j=j+1;}
 				else{arr.push(""+parseInt(read_h[i][j])*2);j=j+2;}
 			}
 			print_h.push(arr);
 		}
 		console.log("print_h "+print_h.length+ " "+print_h);
-
+		if(!can_move){return;}
+		//change contents
 		clear_t(); //clear the current table
 		display_h=[];
 		len = 4;
@@ -92,11 +94,29 @@ function move(orientation,direction)
 				set(id,print_h[i][j]);//console.log("print_h index: "+j+" filling_index: "+si+" id: "+id+" val: "+print_h[i][j]);
 				sj++;
 			}
-		}	
+		}
+		if(!(isOver())){
+		id=getEmptyId();
+		set(id,"2");}
+		else{alert("gameOver");}
 
 		
 }
 
+function isOver()
+{
+	allFilled=true;
+	for(i=1;i<=4;i++)
+	{
+		for(j=1;j<=4;j++)
+		{
+			id="#"+i+""+j;
+			allFilled=(allFilled&&( ($(id).hasClass("filled"))  ));	
+			console.log(id+" "+allFilled);
+		}
+	}
+	return allFilled;
+}
 function clear_t(){
 for(i=1;i<=4;i++){
 	for(j=1;j<=4;j++){
@@ -108,7 +128,7 @@ for(i=1;i<=4;i++){
 function start(){
 id1=getEmptyId();set(id1,"2");
 id2=getEmptyId();set(id2,"2");
-for(i=1;i<=4;i++)
+/*for(i=1;i<=4;i++)
 {
 	for(j=1;j<=4;j++)
 	{
@@ -118,7 +138,7 @@ for(i=1;i<=4;i++)
 unset("#44");set("#44","43");
 unset("#33");set("#33","43");
 unset("#12");set("#12","14");
-unset("#13");
+unset("#13");*/
 }
 
 function unset(id){
