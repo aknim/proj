@@ -32,23 +32,24 @@ div{
 
 
 .d2{
-	color:yellow;
+	background-color:yellow;
+	text-color:green;
 }
 
 .d4{
-        color:purple;
+        background-color:purple;
 }
 
 .d8{
-        color:red;
+        background-color:red;
 }
 
 .d16{
-        color:green;
+        background-color:green;
 }
 
 .d32{
-        color:black;
+        background-color:black;
 }
 
 
