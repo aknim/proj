@@ -156,16 +156,20 @@ function oppositeEdge(direction,len)
 function isOver()
 {
 	allFilled=true;
+	equalsGoal=false;
+	goal="32";
 	for(i=1;i<=4;i++)
 	{
 		for(j=1;j<=4;j++)
 		{
 			id="#"+i+""+j;
-			allFilled=(allFilled&&( ($(id).hasClass("filled"))  ));	
+			equalsGoal=( $(id).html()===goal ); if(equalsGoal) {console.log("Reached Goal");}
+			allFilled=(allFilled&&( ($(id).hasClass("filled"))  ));
 			//console.log(id+" "+allFilled);
 		}
 	}
-	return allFilled;
+	if(allFilled){console.log("Sorry No valid move left");}
+	return (allFilled || equalsGoal);
 }
 function clear_t(){
 for(i=1;i<=4;i++){
