@@ -12,7 +12,7 @@ function clicked(name){
 orientation="empty";direction="empty";
 if ((name==="left")||(name==="right")) orientation="horizontal";
 else orientation="vertical";
-if ((name==="left")||(name==="down")) direction="negative";
+if ((name==="left")||(name==="up")) direction="negative";//(1,1) is at bottom left corner
 else direction="positive";
 console.log("img/btn:"+name+" = "+orientation+" "+direction);
 move(orientation,direction);
@@ -29,12 +29,22 @@ function getId_traversal(orientation,i,j)
 	}
 }
 
+function getStart_traversal_id(direction,len,p_len)
+{
+        switch(direction){
+        case 'positive' :     return len -p_len +1;//as will begun from end
+                break;
+        case 'negative'   :     return 1;
+                break;
+        default:
+        }
+
+}
+
 function move(orientation,direction)
 {
-//	switch(orientation){
-//	case 'horizontal' :
-		read_h=[];
 		//get values in array
+		read_h=[];
 		for(i=1;i<=4;i++){
 				arr=[];
 			for(j=1;j<=4;j++)
@@ -45,11 +55,11 @@ function move(orientation,direction)
 				else{arr.push($(id).html());}
 				
 			}
-			//console.log(arr);
 			read_h.push(arr);
 		}
-		console.log(read_h);	
-
+		console.log("read_h "+read_h);	
+		
+		//calculate values into array
 		print_h=[];
 		for(i=0;i<read_h.length;i++){
 				arr=[];
@@ -60,14 +70,40 @@ function move(orientation,direction)
 			}
 			print_h.push(arr);
 		}
-		console.log(print_h);
-//		break;
-//	case 'vertical' :
-//		break;
+		console.log("print_h "+print_h.length+ " "+print_h);
 
-//	}
+		clear_t(); //clear the current table
+		display_h=[];
+		len = 4;
+		for(i=0;i<print_h.length;i++)
+		{
+			si=i+1;
+			p_len=print_h[i].length;console.log("plen "+p_len);
+			st=getStart_traversal_id(direction,len,p_len);//difference of positive and negative
+			sj=st;
+//			console.log(si+ " s: "+sj);
+			for(j=0;j<p_len;j++)
+			{
+				
+		                console.log(si+ " s: "+sj);
+
+				id=getId_traversal(orientation,si,sj);//difference of horizontal or vertical
+				console.log(" to change: "+id+" val: "+print_h[i][j]);
+				set(id,print_h[i][j]);//console.log("print_h index: "+j+" filling_index: "+si+" id: "+id+" val: "+print_h[i][j]);
+				sj++;
+			}
+		}	
+
+		
 }
 
+function clear_t(){
+for(i=1;i<=4;i++){
+	for(j=1;j<=4;j++){
+		unset("#"+i+""+j);
+	}
+}
+}
 
 function start(){
 id1=getEmptyId();set(id1,"2");
