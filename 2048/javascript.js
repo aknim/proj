@@ -14,7 +14,7 @@ if ((name==="left")||(name==="right")) orientation="horizontal";
 else orientation="vertical";
 if ((name==="left")||(name==="up")) direction="negative";//(1,1) is at bottom left corner
 else direction="positive";
-console.log("img/btn:"+name+" = "+orientation+" "+direction);
+//console.log("img/btn:"+name+" = "+orientation+" "+direction);
 move(orientation,direction);
 }
 
@@ -40,26 +40,61 @@ function getStart_traversal_id(direction,len,p_len)
         }
 
 }
+function log_current(){
+	for(i=1;i<=4;i++){
+		col="";
+		for(j=1;j<=4;j++){
+			id="#"+i+""+j+"";
+			col=col+" "+$(id).html();
+		}
+		console.log(i+" "+col);
+	}
+}
 
 function move(orientation,direction)
 {
+		log_current();
 		//get values in array
 		moving_space=false;
 		same_neighbour=false;
+		sensible_move=false;
+	
+		empty_neighbour=false;
 		read_h=[];
 		for(i=1;i<=4;i++){
 				arr=[];
+				atleast_one=false;
 			for(j=1;j<=4;j++)
 			{
 				id=getId_traversal(orientation,i,j);//difference of horizontal or vertical
 				filled=($(id).hasClass("filled"));
-				if(!filled){if( j != oppositeEdge(direction,4)/*i.e. non-empty and not oppside, hence moving space*/  ) {moving_space=true;}}
-				else{arr.push($(id).html());}
+				if(!filled){
+					oe=oppositeEdge(direction,4); 
+					//console.log("oe for "+id+" "+orientation+" "+direction+" "+ oe); 
+					if( j != oe )/*i.e. non-empty and not oppside, hence moving space*/   
+					{moving_space=true;}
+					}
+				else{
+					if(direction==="positive"&&j!=4){
+						 nextId=getId_traversal(orientation,i,j+1);
+						 empty_neighbour=(empty_neighbour||(!($(nextId).hasClass("filled"))));
+						}
+					if(direction==="negative"&&j!=1){
+                                                 nextId=getId_traversal(orientation,i,j-1);
+                                                 empty_neighbour=(empty_neighbour||(!($(nextId).hasClass("filled")))); 
+                                                }
+	
+					atleast_one=true;arr.push($(id).html());
+					}
+				
 				
 			}
+			sensible_move=(sensible_move||moving_space&&atleast_one);
+			
+			//console.log(i+" moving_space"+moving_space+" atleast_one "+atleast_one+" sensible_move"+sensible_move);
 			read_h.push(arr);
 		}
-		console.log("read_h "+read_h);	
+		//console.log("read_h "+read_h);	
 		
 		//calculate values into array
 		print_h=[];
@@ -72,9 +107,9 @@ function move(orientation,direction)
 			}
 			print_h.push(arr);
 		}
-		console.log("print_h "+print_h.length+ " "+print_h);
+		//console.log("print_h "+print_h.length+ " "+print_h);
 
-		if(!(same_neighbour||moving_space)){return;}
+		if(!(same_neighbour||empty_neighbour)){return;}
 		//change contents
 		clear_t(); //clear the current table
 		display_h=[];
@@ -82,17 +117,17 @@ function move(orientation,direction)
 		for(i=0;i<print_h.length;i++)
 		{
 			si=i+1;
-			p_len=print_h[i].length;console.log("plen "+p_len);
+			p_len=print_h[i].length;//console.log("plen "+p_len);
 			st=getStart_traversal_id(direction,len,p_len);//difference of positive and negative
 			sj=st;
 //			console.log(si+ " s: "+sj);
 			for(j=0;j<p_len;j++)
 			{
 				
-		                console.log(si+ " s: "+sj);
+		                //console.log(si+ " s: "+sj);
 
 				id=getId_traversal(orientation,si,sj);//difference of horizontal or vertical
-				console.log(" to change: "+id+" val: "+print_h[i][j]);
+				//console.log(" to change: "+id+" val: "+print_h[i][j]);
 				set(id,print_h[i][j]);//console.log("print_h index: "+j+" filling_index: "+si+" id: "+id+" val: "+print_h[i][j]);
 				sj++;
 			}
@@ -125,7 +160,7 @@ function isOver()
 		{
 			id="#"+i+""+j;
 			allFilled=(allFilled&&( ($(id).hasClass("filled"))  ));	
-			console.log(id+" "+allFilled);
+			//console.log(id+" "+allFilled);
 		}
 	}
 	return allFilled;
