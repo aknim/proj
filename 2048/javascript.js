@@ -44,7 +44,8 @@ function getStart_traversal_id(direction,len,p_len)
 function move(orientation,direction)
 {
 		//get values in array
-		can_move=false;
+		moving_space=false;
+		same_neighbour=false;
 		read_h=[];
 		for(i=1;i<=4;i++){
 				arr=[];
@@ -52,7 +53,7 @@ function move(orientation,direction)
 			{
 				id=getId_traversal(orientation,i,j);//difference of horizontal or vertical
 				filled=($(id).hasClass("filled"));
-				if(!filled){}
+				if(!filled){if( j != oppositeEdge(direction,4)/*i.e. non-empty and not oppside, hence moving space*/  ) {moving_space=true;}}
 				else{arr.push($(id).html());}
 				
 			}
@@ -65,14 +66,15 @@ function move(orientation,direction)
 		for(i=0;i<read_h.length;i++){
 				arr=[];
 			for(j=0;j<read_h[i].length;){
-				if(j+1==read_h[i].length){arr.push(read_h[i][j]);j=j+1;can_move=false;}
+				if(j+1==read_h[i].length){arr.push(read_h[i][j]);j=j+1;same_neighbour=false;}
 				else if(read_h[i][j]!==read_h[i][j+1]){arr.push(read_h[i][j]);j=j+1;}
 				else{arr.push(""+parseInt(read_h[i][j])*2);j=j+2;}
 			}
 			print_h.push(arr);
 		}
 		console.log("print_h "+print_h.length+ " "+print_h);
-		if(!can_move){return;}
+
+		if(!(same_neighbour||moving_space)){return;}
 		//change contents
 		clear_t(); //clear the current table
 		display_h=[];
@@ -101,6 +103,17 @@ function move(orientation,direction)
 		else{alert("gameOver");}
 
 		
+}
+
+function oppositeEdge(direction,len)
+{
+	switch(direction){
+	case 'positive': return 1;
+		break;
+	case 'negative': return len;
+		break;
+	default:
+	}
 }
 
 function isOver()
