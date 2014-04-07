@@ -1,0 +1,49 @@
+table{
+/*	border: 3px solid green;*/
+}
+
+.btn{
+	border: 2px outset green;
+	background-color:rgba(0,255,0,0.5);
+}
+
+td{
+	border: 2px inset violet;
+	padding:2px;
+	height: 40px;
+	width : 40px;
+}
+
+div{
+	background-color:rgba(255,0,0,0.3);
+	height: 40px;
+	width:  40px;
+	top: -40px;
+	left:-110px;
+	bottom:30px;
+	right:30px;
+}
+
+
+
+.d2{
+	color:yellow;
+}
+
+.d4{
+        color:purple;
+}
+
+.d8{
+        color:red;
+}
+
+.d16{
+        color:green;
+}
+
+.d32{
+        color:black;
+}
+
+
